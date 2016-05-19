@@ -1,4 +1,4 @@
-package TicTacToe;
+package tictactoe.data;
 
 public class Board {
 
@@ -22,7 +22,7 @@ public class Board {
         return COLUMN_SIZE;
     }
 
-    public void printBoard() {
+    public String toString() {
         String aString = "";
         for(int row = 0; row < board.length; row++) {
             for(int col = 0; col < board[row].length; col++) {
@@ -30,18 +30,7 @@ public class Board {
             }
             aString += "\r\n";
         }
-        System.out.println(aString);
-    }
-
-    public void createNewBoard() {
-        Cell[][] cells = new Cell[Board.getColumnSize()][Board.getRowSize()];
-        for (int row = 0; row < cells.length; row++) {
-            for (int column = 0; column < cells[row].length; column++) {
-                Cell cell = new Cell("[ ]");
-                cells[row][column] = cell;
-            }
-        }
-        board = (cells);
+        return aString;
     }
 
 }

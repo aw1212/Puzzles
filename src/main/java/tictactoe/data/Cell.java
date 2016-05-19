@@ -1,10 +1,10 @@
-package TicTacToe;
+package tictactoe.data;
 
 public class Cell {
 
     private String cell;
 
-    Cell(String cell) {
+    public Cell(String cell) {
         this.cell = cell;
     }
 

@@ -1,4 +1,7 @@
-package TicTacToe;
+package tictactoe.service;
+
+import tictactoe.data.Board;
+import tictactoe.data.Cell;
 
 public class TieChecker {
 

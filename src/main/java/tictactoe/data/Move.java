@@ -1,4 +1,4 @@
-package TicTacToe;
+package tictactoe.data;
 
 public class Move {
 

@@ -1,16 +1,21 @@
-package TicTacToe;
+package tictactoe;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import tictactoe.data.Board;
+import tictactoe.data.Cell;
+import tictactoe.data.Game;
+import tictactoe.service.BoardService;
+import tictactoe.service.WinChecker;
+
 public class WinCheckerTest {
 
     @Test
     public void givenEmptyBoard_whenPlayingGame_thenNoWinners() {
-        Board board = new Board();
-        board.createNewBoard();
+        Board board = BoardService.getNewBoard();
         Game game = new Game();
         game.setAiPlayerPiece("[X]");
         game.setOpponentPiece("[O]");
@@ -21,8 +26,7 @@ public class WinCheckerTest {
 
     @Test
     public void givenDiagonalX_whenAIisX_thenAIisWinner() {
-        Board board = new Board();
-        board.createNewBoard();
+        Board board = BoardService.getNewBoard();
         Cell[][] cells = board.getBoard();
         cells[0][0].setCell("[X]");
         cells[1][1].setCell("[X]");

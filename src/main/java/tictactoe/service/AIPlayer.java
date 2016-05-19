@@ -1,15 +1,19 @@
-package TicTacToe;
+package tictactoe.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import tictactoe.data.Game;
+import tictactoe.data.Board;
+import tictactoe.data.Cell;
+import tictactoe.data.Move;
 
 public class AIPlayer {
 
     public Map<Move, Integer> maximize(Board board, int depth, Game game) {
         Cell[][] cells = board.getBoard().clone();
-        List<Move> possibleMoves = getEmptySlots(board);
+        List<Move> possibleMoves = BoardService.getEmptySlots(board);
         int bestScore = Integer.MIN_VALUE;
         int currentScore;
         int bestRow = -1;
@@ -38,7 +42,7 @@ public class AIPlayer {
 
     private Map<Move, Integer> minimize(Board board, int depth, Game game) {
         Cell[][] cells = board.getBoard().clone();
-        List<Move> possibleMoves = getEmptySlots(board);
+        List<Move> possibleMoves = BoardService.getEmptySlots(board);
         int bestScore = Integer.MAX_VALUE;
         int currentScore;
         int bestRow = -1;
@@ -81,20 +85,6 @@ public class AIPlayer {
             score = 0;
         }
         return score;
-    }
-
-    private static List<Move> getEmptySlots(Board board){
-        List<Move> possibleMoves = new ArrayList<>();
-        Cell[][] cells = board.getBoard();
-        for (int row = 0; row < cells.length; row++) {
-            for (int column = 0; column < cells.length; column++) {
-                if(cells[row][column].getCell().equals("[ ]")) {
-                    Move move = new Move(row, column);
-                    possibleMoves.add(move);
-                }
-            }
-        }
-        return possibleMoves;
     }
 
 }

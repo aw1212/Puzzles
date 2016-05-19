@@ -1,16 +1,20 @@
-package TicTacToe;
+package tictactoe.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+import tictactoe.data.Board;
+import tictactoe.data.Cell;
+import tictactoe.data.Game;
+import tictactoe.data.Move;
+
 public class Run {
 
     public static void main(String[] args) throws IOException {
         Game game = new Game();
-        Board board = new Board();
-        board.createNewBoard();
+        Board board = BoardService.getNewBoard();
 
         System.out.println("Welcome to Tic-Tac-Toe. Would you like to be X or O?");
         game.setOpponentPiece(getOpponentPieceChoice());
@@ -19,7 +23,7 @@ public class Run {
         boolean opponentStarts = isOpponentStarter();
         System.out.println("Lastly, what difficulty level? Easy (E) or Impossible to Win (I)?");
         game.setDifficultyLevel(getDepth());
-        board.printBoard();
+        System.out.println(board);;
         playGame(opponentStarts, board, game);
     }
 
@@ -115,7 +119,7 @@ public class Run {
             } else {
                 currentBoard[move.getRow()][move.getColumn()].setCell(game.getOpponentPiece());
                 board.setBoard(currentBoard);
-                board.printBoard();
+                System.out.println(board);
             }
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("That is not a valid location. Try again\n");
@@ -136,7 +140,7 @@ public class Run {
         } else {
             currentBoard[move.getRow()][move.getColumn()].setCell(game.getAiPlayerPiece());
             board.setBoard(currentBoard);
-            board.printBoard();
+            System.out.println(board);
         }
     }
 
