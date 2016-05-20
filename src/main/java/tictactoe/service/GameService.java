@@ -12,65 +12,79 @@ import tictactoe.data.Game;
 public class GameService {
 
     @Autowired
-    private MoveService moveService;
+    private AI ai;
+    @Autowired
+    private Opponent opponent;
+    @Autowired
+    private WinChecker winChecker;
+    @Autowired
+    private TieChecker tieChecker;
 
     public boolean gameIsOver(Board board, Game game) {
-        return WinChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece())
-                || WinChecker.isAWinForOpponent(board, game.getOpponentPiece())
-                || TieChecker.isATie(board);
+        return winChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece())
+                || winChecker.isAWinForOpponent(board, game.getOpponentPiece())
+                || tieChecker.isATie(board);
     }
 
     public int getScore(Board board, Game game) {
         int score = 0;
-        if (WinChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece())) {
+        if (winChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece())) {
             score = 100;
-        } else if (WinChecker.isAWinForOpponent(board, game.getOpponentPiece())) {
+        } else if (winChecker.isAWinForOpponent(board, game.getOpponentPiece())) {
             score = -100;
-        } else if (TieChecker.isATie(board)) {
+        } else if (tieChecker.isATie(board)) {
             score = 0;
         }
         return score;
     }
 
-    public void playGame(boolean opponentStarts, Board board, Game game) throws IOException {
-        if (opponentStarts) {
-            do {
-                moveService.getMove(board, game);
-                game.setIsWon(WinChecker.isAWinForOpponent(board, game.getOpponentPiece()));
-                game.setIsATie(TieChecker.isATie(board));
-                if (game.isATie() || game.isWon()) {
-                    break;
-                }
-                moveService.makeMove(board, game);
-                game.setIsWon(WinChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece()));
-                game.setIsATie(TieChecker.isATie(board));
-                if (game.isATie() || game.isWon()) {
-                    break;
-                }
-            } while (!game.isATie() && !game.isWon());
+    public void playGame(Board board, Game game) throws IOException {
+        if (opponent.isStarter()) {
+            playWithOpponentFirst(board, game);
         } else {
-            do {
-                moveService.makeMove(board, game);
-                game.setIsWon(WinChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece()));
-                game.setIsATie(TieChecker.isATie(board));
-                if (game.isATie() || game.isWon()) {
-                    break;
-                }
-                moveService.getMove(board, game);
-                game.setIsWon(WinChecker.isAWinForOpponent(board, game.getOpponentPiece()));
-                game.setIsATie(TieChecker.isATie(board));
-                if (game.isATie() || game.isWon()) {
-                    break;
-                }
-            } while (!game.isATie() && !game.isWon());
+            playWithAIFirst(board, game);
         }
-        if (WinChecker.isAWinForOpponent(board, game.getOpponentPiece())) {
+        if (winChecker.isAWinForOpponent(board, game.getOpponentPiece())) {
             System.out.println("YOU WIN!");
-        } else if (WinChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece())) {
+        } else if (winChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece())) {
             System.out.println("YOU LOSE!");
         } else {
             System.out.println("IT'S A TIE");
         }
+    }
+
+    private void playWithOpponentFirst(Board board, Game game) throws IOException {
+        do {
+            opponent.makeMove(board, game);
+            game.setIsWon(winChecker.isAWinForOpponent(board, game.getOpponentPiece()));
+            game.setIsATie(tieChecker.isATie(board));
+            if (game.isATie() || game.isWon()) {
+                break;
+            }
+            ai.makeMove(board, game);
+            game.setIsWon(winChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece()));
+            game.setIsATie(tieChecker.isATie(board));
+            if (game.isATie() || game.isWon()) {
+                break;
+            }
+        } while (!game.isATie() && !game.isWon());
+    }
+
+    private void playWithAIFirst(Board board, Game game) throws IOException {
+        do {
+            ai.makeMove(board, game);
+            game.setIsWon(winChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece()));
+            game.setIsATie(tieChecker.isATie(board));
+            if (game.isATie() || game.isWon()) {
+                break;
+            }
+            opponent.makeMove(board, game);
+            game.setIsWon(winChecker.isAWinForOpponent(board, game.getOpponentPiece()));
+            game.setIsATie(tieChecker.isATie(board));
+            if (game.isATie() || game.isWon()) {
+                break;
+            }
+        } while (!game.isATie() && !game.isWon());
     }
 
 }

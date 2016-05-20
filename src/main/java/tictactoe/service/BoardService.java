@@ -3,13 +3,16 @@ package tictactoe.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import tictactoe.data.Board;
 import tictactoe.data.Cell;
 import tictactoe.data.Move;
 
+@Service
 public class BoardService {
 
-    public static Board getNewBoard() {
+    public Board getNewBoard() {
         Board board = new Board();
         Cell[][] cells = new Cell[Board.getColumnSize()][Board.getRowSize()];
         for (int row = 0; row < cells.length; row++) {
@@ -22,7 +25,7 @@ public class BoardService {
         return board;
     }
 
-    public static List<Move> getEmptySlots(Board board){
+    public List<Move> getEmptySlots(Board board){
         List<Move> possibleMoves = new ArrayList<>();
         Cell[][] cells = board.getBoard();
         for (int row = 0; row < cells.length; row++) {
@@ -35,4 +38,5 @@ public class BoardService {
         }
         return possibleMoves;
     }
+
 }

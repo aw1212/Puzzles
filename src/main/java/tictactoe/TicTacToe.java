@@ -1,4 +1,4 @@
-package tictactoe.service;
+package tictactoe;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,12 +11,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import tictactoe.data.Board;
 import tictactoe.data.Game;
+import tictactoe.service.BoardService;
+import tictactoe.service.GameService;
+import tictactoe.service.Opponent;
+import tictactoe.service.Player;
 
 @SpringBootApplication
 public class TicTacToe implements CommandLineRunner {
 
     @Autowired
     private GameService gameService;
+    @Autowired
+    private Opponent opponent;
+    @Autowired
+    private BoardService boardService;
 
     public static void main(String[] args) {
         SpringApplication.run(TicTacToe.class, args);
@@ -24,16 +32,16 @@ public class TicTacToe implements CommandLineRunner {
 
     public void run(String[] args) throws IOException {
         Game game = new Game();
-        Board board = BoardService.getNewBoard();
+        Board board = boardService.getNewBoard();
         System.out.println("Welcome to Tic-Tac-Toe. Would you like to be X or O?");
         game.setOpponentPiece(getOpponentPieceChoice());
         game.setAiPlayerPiece(game.getOpponentPiece().equals("[O]") ? "[X]" : "[O]");
         System.out.println("Would you like to go first? Y/N");
-        boolean opponentStarts = isOpponentStarter();
+        opponent.setStarter(isOpponentStarter());
         System.out.println("Lastly, what difficulty level? Easy (E) or Impossible to Win (I)?");
         game.setDifficultyLevel(getDepth());
         System.out.println(board);
-        gameService.playGame(opponentStarts, board, game);
+        gameService.playGame(board, game);
     }
 
     private static String getOpponentPieceChoice() throws IOException {

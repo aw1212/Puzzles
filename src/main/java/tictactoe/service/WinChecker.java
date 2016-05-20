@@ -1,19 +1,22 @@
 package tictactoe.service;
 
+import org.springframework.stereotype.Component;
+
 import tictactoe.data.Board;
 import tictactoe.data.Cell;
 
+@Component
 public class WinChecker {
 
-    public static boolean isAWinForAIPlayer(Board board, String player) {
+    public boolean isAWinForAIPlayer(Board board, String player) {
         return isAWin(board, player);
     }
 
-    public static boolean isAWinForOpponent(Board board, String opponent) {
+    public boolean isAWinForOpponent(Board board, String opponent) {
         return isAWin(board, opponent);
     }
 
-    private static boolean isAWin(Board board, String player) {
+    private boolean isAWin(Board board, String player) {
         Cell[][] cells = board.getBoard();
 
         if (cells[0][0].getCell().equals(player)

@@ -7,9 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import tictactoe.data.Game;
 import tictactoe.data.Board;
 import tictactoe.data.Cell;
+import tictactoe.data.Game;
 import tictactoe.data.Move;
 
 @Component
@@ -17,10 +17,12 @@ public class MiniMax {
 
     @Autowired
     private GameService gameService;
+    @Autowired
+    private BoardService boardService;
 
     public Map<Move, Integer> maximize(Board board, int depth, Game game) {
         Cell[][] cells = board.getBoard().clone();
-        List<Move> possibleMoves = BoardService.getEmptySlots(board);
+        List<Move> possibleMoves = boardService.getEmptySlots(board);
         int bestScore = Integer.MIN_VALUE;
         int currentScore;
         int bestRow = -1;
@@ -49,7 +51,7 @@ public class MiniMax {
 
     private Map<Move, Integer> minimize(Board board, int depth, Game game) {
         Cell[][] cells = board.getBoard().clone();
-        List<Move> possibleMoves = BoardService.getEmptySlots(board);
+        List<Move> possibleMoves = boardService.getEmptySlots(board);
         int bestScore = Integer.MAX_VALUE;
         int currentScore;
         int bestRow = -1;
