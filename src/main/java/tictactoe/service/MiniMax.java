@@ -4,12 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import tictactoe.data.Game;
 import tictactoe.data.Board;
 import tictactoe.data.Cell;
 import tictactoe.data.Move;
 
-public class AIPlayer {
+@Component
+public class MiniMax {
+
+    @Autowired
+    private GameService gameService;
 
     public Map<Move, Integer> maximize(Board board, int depth, Game game) {
         Cell[][] cells = board.getBoard().clone();
@@ -18,8 +25,8 @@ public class AIPlayer {
         int currentScore;
         int bestRow = -1;
         int bestCol = -1;
-        if (gameIsOver(board, game) || depth == 0) {
-            bestScore = getScore(board, game);
+        if (gameService.gameIsOver(board, game) || depth == 0) {
+            bestScore = gameService.getScore(board, game);
         } else {
             for (Move move : possibleMoves) {
                 cells[move.getRow()][move.getColumn()].setCell(game.getAiPlayerPiece());
@@ -47,8 +54,8 @@ public class AIPlayer {
         int currentScore;
         int bestRow = -1;
         int bestCol = -1;
-        if (gameIsOver(board, game) || depth == 0) {
-            bestScore = getScore(board, game);
+        if (gameService.gameIsOver(board, game) || depth == 0) {
+            bestScore = gameService.getScore(board, game);
         } else {
             for (Move move : possibleMoves) {
                 cells[move.getRow()][move.getColumn()].setCell(game.getOpponentPiece());
@@ -67,24 +74,6 @@ public class AIPlayer {
         moveAndScore.put(move, bestScore);
 
         return moveAndScore;
-    }
-
-    private boolean gameIsOver(Board board, Game game) {
-        return WinChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece())
-                || WinChecker.isAWinForOpponent(board, game.getOpponentPiece())
-                || TieChecker.isATie(board);
-    }
-
-    private static int getScore(Board board, Game game) {
-        int score = 0;
-        if (WinChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece())) {
-            score = 100;
-        } else if (WinChecker.isAWinForOpponent(board, game.getOpponentPiece())) {
-            score = -100;
-        } else if (TieChecker.isATie(board)) {
-            score = 0;
-        }
-        return score;
     }
 
 }

@@ -1,5 +1,8 @@
 package tictactoe.data;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Game {
 
     private boolean isWon = false;
