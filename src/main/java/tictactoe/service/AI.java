@@ -20,7 +20,7 @@ public class AI extends Player {
     @Override
     public void makeMove(Board board, Game game) throws IOException {
         System.out.println("AI's move:");
-        Map<Move, Integer> moveAndScore = miniMax.maximize(board, game.getDifficultyLevel(), game);
+        Map<Move, Integer> moveAndScore = miniMax.maximize(board, game.getDifficultyLevel());
         Map.Entry<Move, Integer> coordinatesAndScore = moveAndScore.entrySet().iterator().next();
         int row = coordinatesAndScore.getKey().getRow();
         int column = coordinatesAndScore.getKey().getColumn();
@@ -29,7 +29,7 @@ public class AI extends Player {
         if (!currentBoard[row][column].getCell().equals("[ ]")) {
             makeMove(board, game);
         } else {
-            currentBoard[row][column].setCell(game.getAiPlayerPiece());
+            currentBoard[row][column].setCell(getPiece());
             board.setBoard(currentBoard);
             System.out.println(board);
         }

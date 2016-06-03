@@ -8,12 +8,12 @@ import tictactoe.data.Cell;
 @Component
 public class WinChecker {
 
-    public boolean isAWinForAIPlayer(Board board, String player) {
-        return isAWin(board, player);
+    public boolean isAWinForX(Board board) {
+        return isAWin(board, "[X]");
     }
 
-    public boolean isAWinForOpponent(Board board, String opponent) {
-        return isAWin(board, opponent);
+    public boolean isAWinForO(Board board) {
+        return isAWin(board, "[O]");
     }
 
     private boolean isAWin(Board board, String player) {

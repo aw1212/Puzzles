@@ -11,7 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import tictactoe.data.Board;
 import tictactoe.data.Cell;
-import tictactoe.data.Game;
 import tictactoe.service.BoardService;
 import tictactoe.service.WinChecker;
 
@@ -25,30 +24,24 @@ public class WinCheckerTest {
     private WinChecker winChecker = new WinChecker();
 
     @Test
-    public void givenEmptyBoard_whenPlayingGame_thenNoWinners() {
+    public void givenEmptyBoard_whenCheckingWin_thenNoWinners() {
         Board board = boardService.getNewBoard();
-        Game game = new Game();
-        game.setAiPlayerPiece("[X]");
-        game.setOpponentPiece("[O]");
 
-        assertFalse(winChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece()));
-        assertFalse(winChecker.isAWinForOpponent(board, game.getOpponentPiece()));
+        assertFalse(winChecker.isAWinForX(board));
+        assertFalse(winChecker.isAWinForO(board));
     }
 
     @Test
-    public void givenDiagonalX_whenAIisX_thenAIisWinner() {
+    public void givenDiagonalX_whenCheckingWin_thenXisWinner() {
         Board board = boardService.getNewBoard();
         Cell[][] cells = board.getBoard();
         cells[0][0].setCell("[X]");
         cells[1][1].setCell("[X]");
         cells[2][2].setCell("[X]");
         board.setBoard(cells);
-        Game game = new Game();
-        game.setAiPlayerPiece("[X]");
-        game.setOpponentPiece("[O]");
 
-        assertTrue(winChecker.isAWinForAIPlayer(board, game.getAiPlayerPiece()));
-        assertFalse(winChecker.isAWinForOpponent(board, game.getOpponentPiece()));
+        assertTrue(winChecker.isAWinForX(board));
+        assertFalse(winChecker.isAWinForO(board));
     }
 
 }

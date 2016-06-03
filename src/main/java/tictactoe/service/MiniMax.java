@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import tictactoe.data.Board;
 import tictactoe.data.Cell;
-import tictactoe.data.Game;
 import tictactoe.data.Move;
 
 @Component
@@ -19,25 +18,31 @@ public class MiniMax {
     private GameService gameService;
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private Opponent opponent;
+    @Autowired
+    private AI ai;
 
-    public Map<Move, Integer> maximize(Board board, int depth, Game game) {
+    public Map<Move, Integer> maximize(Board board, int depth) {
         Cell[][] cells = board.getBoard().clone();
         List<Move> possibleMoves = boardService.getEmptySlots(board);
         int bestScore = Integer.MIN_VALUE;
         int currentScore;
         int bestRow = -1;
         int bestCol = -1;
-        if (gameService.gameIsOver(board, game) || depth == 0) {
-            bestScore = gameService.getScore(board, game);
+        if (gameService.gameIsOver(board) || depth == 0) {
+            bestScore = gameService.getScore(board);
         } else {
             for (Move move : possibleMoves) {
-                cells[move.getRow()][move.getColumn()].setCell(game.getAiPlayerPiece());
-                Map.Entry<Move, Integer> entry = minimize(board, depth - 1, game).entrySet().iterator().next();
+                int row = move.getRow();
+                int column = move.getColumn();
+                cells[row][column].setCell(ai.getPiece());
+                Map.Entry<Move, Integer> entry = minimize(board, depth - 1).entrySet().iterator().next();
                 currentScore = entry.getValue();
                 if (currentScore > bestScore) {
                     bestScore = currentScore;
-                    bestRow = move.getRow();
-                    bestCol = move.getColumn();
+                    bestRow = row;
+                    bestCol = column;
                 }
                 cells[move.getRow()][move.getColumn()].setCell("[ ]");
             }
@@ -49,24 +54,26 @@ public class MiniMax {
         return moveAndScore;
     }
 
-    private Map<Move, Integer> minimize(Board board, int depth, Game game) {
+    private Map<Move, Integer> minimize(Board board, int depth) {
         Cell[][] cells = board.getBoard().clone();
         List<Move> possibleMoves = boardService.getEmptySlots(board);
         int bestScore = Integer.MAX_VALUE;
         int currentScore;
         int bestRow = -1;
         int bestCol = -1;
-        if (gameService.gameIsOver(board, game) || depth == 0) {
-            bestScore = gameService.getScore(board, game);
+        if (gameService.gameIsOver(board) || depth == 0) {
+            bestScore = gameService.getScore(board);
         } else {
             for (Move move : possibleMoves) {
-                cells[move.getRow()][move.getColumn()].setCell(game.getOpponentPiece());
-                Map.Entry<Move, Integer> entry = maximize(board, depth - 1, game).entrySet().iterator().next();
+                int row = move.getRow();
+                int column = move.getColumn();
+                cells[row][column].setCell(opponent.getPiece());
+                Map.Entry<Move, Integer> entry = maximize(board, depth - 1).entrySet().iterator().next();
                 currentScore = entry.getValue();
                 if (currentScore < bestScore) {
                     bestScore = currentScore;
-                    bestRow = move.getRow();
-                    bestCol = move.getColumn();
+                    bestRow = row;
+                    bestCol = column;
                 }
                 cells[move.getRow()][move.getColumn()].setCell("[ ]");
             }

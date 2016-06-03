@@ -11,10 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import tictactoe.data.Board;
 import tictactoe.data.Game;
+import tictactoe.service.AI;
 import tictactoe.service.BoardService;
 import tictactoe.service.GameService;
 import tictactoe.service.Opponent;
-import tictactoe.service.Player;
 
 @SpringBootApplication
 public class TicTacToe implements CommandLineRunner {
@@ -25,6 +25,8 @@ public class TicTacToe implements CommandLineRunner {
     private Opponent opponent;
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private AI ai;
 
     public static void main(String[] args) {
         SpringApplication.run(TicTacToe.class, args);
@@ -34,8 +36,8 @@ public class TicTacToe implements CommandLineRunner {
         Game game = new Game();
         Board board = boardService.getNewBoard();
         System.out.println("Welcome to Tic-Tac-Toe. Would you like to be X or O?");
-        game.setOpponentPiece(getOpponentPieceChoice());
-        game.setAiPlayerPiece(game.getOpponentPiece().equals("[O]") ? "[X]" : "[O]");
+        opponent.setPiece(getOpponentPieceChoice());
+        ai.setPiece(opponent.getPiece().equals("[O]") ? "[X]" : "[O]");
         System.out.println("Would you like to go first? Y/N");
         opponent.setStarter(isOpponentStarter());
         System.out.println("Lastly, what difficulty level? Easy (E) or Impossible to Win (I)?");

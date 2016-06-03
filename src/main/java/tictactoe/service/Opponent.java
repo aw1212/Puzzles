@@ -45,7 +45,7 @@ public class Opponent extends Player {
             System.out.println("Already a piece there. Try again\n");
             makeMove(board, game);
         } else {
-            currentBoard[move.getRow()][move.getColumn()].setCell(game.getOpponentPiece());
+            currentBoard[move.getRow()][move.getColumn()].setCell(getPiece());
             board.setBoard(currentBoard);
             System.out.println(board);
         }
