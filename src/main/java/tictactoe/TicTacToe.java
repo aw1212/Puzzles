@@ -35,6 +35,11 @@ public class TicTacToe implements CommandLineRunner {
     public void run(String[] args) throws IOException {
         Game game = new Game();
         Board board = boardService.getNewBoard();
+        setUpGame(game, board);
+        gameService.playGame(board, game);
+    }
+
+    private void setUpGame(Game game, Board board) throws IOException {
         System.out.println("Welcome to Tic-Tac-Toe. Would you like to be X or O?");
         opponent.setPiece(getOpponentPieceChoice());
         ai.setPiece(opponent.getPiece().equals("[O]") ? "[X]" : "[O]");
@@ -43,10 +48,9 @@ public class TicTacToe implements CommandLineRunner {
         System.out.println("Lastly, what difficulty level? Easy (E) or Impossible to Win (I)?");
         game.setDifficultyLevel(getDepth());
         System.out.println(board);
-        gameService.playGame(board, game);
     }
 
-    private static String getOpponentPieceChoice() throws IOException {
+    private String getOpponentPieceChoice() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = br.readLine();
         while (!input.toUpperCase().equals("X") && !input.toUpperCase().equals("O")) {
@@ -56,7 +60,7 @@ public class TicTacToe implements CommandLineRunner {
         return "[" + input.toUpperCase() + "]";
     }
 
-    private static boolean isOpponentStarter() throws IOException {
+    private boolean isOpponentStarter() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = br.readLine();
         while (!input.toUpperCase().equals("Y") && !input.toUpperCase().equals("N")) {
@@ -66,7 +70,7 @@ public class TicTacToe implements CommandLineRunner {
         return input.toUpperCase().equals("Y");
     }
 
-    private static int getDepth() throws IOException {
+    private int getDepth() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = br.readLine();
         while (!input.toUpperCase().equals("E")  && !input.toUpperCase().equals("I")) {
