@@ -1,4 +1,4 @@
-package tictactoe.service;
+package game.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 
 import org.springframework.stereotype.Component;
 
-import tictactoe.data.Board;
-import tictactoe.data.Cell;
-import tictactoe.data.Game;
-import tictactoe.data.Move;
+import game.data.Board;
+import game.data.Cell;
+import game.data.Game;
+import game.data.Move;
 
 @Component
 public class Opponent extends Player {
@@ -33,7 +33,7 @@ public class Opponent extends Player {
             String input = br.readLine();
             Move move = new Move(Integer.parseInt(input.substring(0, 1)), Integer.parseInt(input.substring(1, 2)));
             makeMoveIfEmptySpot(board, move, game);
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException | StringIndexOutOfBoundsException e) {
             System.out.println("That is not a valid location. Try again\n");
             makeMove(board, game);
         }

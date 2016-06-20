@@ -1,4 +1,4 @@
-package tictactoe;
+package game;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,12 +9,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import tictactoe.data.Board;
-import tictactoe.data.Game;
-import tictactoe.service.AI;
-import tictactoe.service.BoardService;
-import tictactoe.service.GameService;
-import tictactoe.service.Opponent;
+import game.data.Board;
+import game.data.Game;
+import game.service.AI;
+import game.service.BoardService;
+import game.service.GameService;
+import game.service.Opponent;
 
 @SpringBootApplication
 public class TicTacToe implements CommandLineRunner {

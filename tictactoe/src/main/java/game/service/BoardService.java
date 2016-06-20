@@ -1,13 +1,13 @@
-package tictactoe.service;
+package game.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import tictactoe.data.Board;
-import tictactoe.data.Cell;
-import tictactoe.data.Move;
+import game.data.Board;
+import game.data.Cell;
+import game.data.Move;
 
 @Service
 public class BoardService {

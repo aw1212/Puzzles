@@ -1,4 +1,4 @@
-package tictactoe.data;
+package game.data;
 
 public class Cell {
 

@@ -1,9 +1,9 @@
-package tictactoe.service;
+package game.service;
 
 import java.io.IOException;
 
-import tictactoe.data.Board;
-import tictactoe.data.Game;
+import game.data.Board;
+import game.data.Game;
 
 public abstract class Player {
 

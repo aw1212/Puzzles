@@ -1,9 +1,9 @@
-package tictactoe.service;
+package game.service;
 
 import org.springframework.stereotype.Component;
 
-import tictactoe.data.Board;
-import tictactoe.data.Cell;
+import game.data.Board;
+import game.data.Cell;
 
 @Component
 public class TieChecker {

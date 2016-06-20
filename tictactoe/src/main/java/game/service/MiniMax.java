@@ -1,4 +1,4 @@
-package tictactoe.service;
+package game.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import tictactoe.data.Board;
-import tictactoe.data.Cell;
-import tictactoe.data.Move;
+import game.data.Board;
+import game.data.Cell;
+import game.data.Move;
 
 @Component
 public class MiniMax {

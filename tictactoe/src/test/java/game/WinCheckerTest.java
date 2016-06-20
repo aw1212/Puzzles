@@ -1,4 +1,4 @@
-package tictactoe;
+package game;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,10 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import tictactoe.data.Board;
-import tictactoe.data.Cell;
-import tictactoe.service.BoardService;
-import tictactoe.service.WinChecker;
+import game.data.Board;
+import game.data.Cell;
+import game.service.BoardService;
+import game.service.WinChecker;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WinCheckerTest {

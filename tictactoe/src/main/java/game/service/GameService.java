@@ -1,12 +1,12 @@
-package tictactoe.service;
+package game.service;
 
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tictactoe.data.Board;
-import tictactoe.data.Game;
+import game.data.Board;
+import game.data.Game;
 
 @Service
 public class GameService {
